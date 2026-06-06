@@ -24,4 +24,4 @@ RUN umask 022 && \
     chmod 755 /usr/local/bin
 
 # Install LibreLane
-RUN pip3 install librelane==2.4.2
+RUN pip3 install librelane==3.0.3
