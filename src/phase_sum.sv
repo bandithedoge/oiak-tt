@@ -12,10 +12,10 @@ module phase_sum (
   localparam [28:0] fifth = 277094664;
   localparam [17:0] sixth = 182543;
 
-  logic [32:0] p0a, p1a, p2a, p3a, p4a, p5a;
-  logic [32:0] p0b, p1b, p2b, p3b, p4b, p5b;
-  logic [35:0] sa_l, sa_m, sa_h, sa;
-  logic [35:0] sb_l, sb_m, sb_h, sb;
+  logic [35:0] p0a, p1a, p2a, p3a, p4a, p5a;
+  logic [35:0] p0b, p1b, p2b, p3b, p4b, p5b;
+  logic [36:0] sa_l, sa_m, sa_h;
+  logic [36:0] sb_l, sb_m, sb_h;
 
   assign p0a = {32'b0, a.first} * first;
   assign p1a = {31'b0, a.second} * {1'b0, second};
@@ -31,18 +31,16 @@ module phase_sum (
   assign p4b = {28'b0, b.fifth} * {4'b0, fifth};
   assign p5b = {17'b0, b.sixth} * {15'b0, sixth};
 
-  assign sa_l = {3'b0, p0a} + {3'b0, p1a};
-  assign sa_m = {3'b0, p2a} + {3'b0, p3a};
-  assign sa_h = {3'b0, p4a} + {3'b0, p5a};
-  assign sa = sa_l + sa_m + sa_h;
+  assign sa_l = p0a + p1a;
+  assign sa_m = p2a + p3a;
+  assign sa_h = p4a + p5a;
 
-  assign sb_l = {3'b0, p0b} + {3'b0, p1b};
-  assign sb_m = {3'b0, p2b} + {3'b0, p3b};
-  assign sb_h = {3'b0, p4b} + {3'b0, p5b};
-  assign sb = sb_l + sb_m + sb_h;
+  assign sb_l = p0b + p1b;
+  assign sb_m = p2b + p3b;
+  assign sb_h = p4b + p5b;
 
-  assign out.lt = (sa[32:0] < sb[32:0]);
-  assign out.eq = (sa[32:0] == sb[32:0]);
-  assign out.gt = (sa[32:0] > sb[32:0]);
+  assign out.lt = (sa_l + sa_m + sa_h) < (sb_l + sb_m + sb_h);
+  assign out.eq = (sa_l + sa_m + sa_h) == (sb_l + sb_m + sb_h);
+  assign out.gt = (sa_l + sa_m + sa_h) > (sb_l + sb_m + sb_h);
 
 endmodule

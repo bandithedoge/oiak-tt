@@ -9,5 +9,6 @@ pkgs.mkShell {
     python3
     python3Packages.cocotb
     python3Packages.pytest
+    verilator
   ];
 }

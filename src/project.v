@@ -55,6 +55,6 @@ module tt_um_mdf_demo (
   assign uio_out = 8'b0;
   assign uio_oe  = 8'b0;
 
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, clk, rst_n, uio_in[7], 1'b0};
 
 endmodule
